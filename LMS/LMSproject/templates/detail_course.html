@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMS</title>
+    <title>Detail Course</title>
 </head>
 <body>
-    <h1>
-    {% for course in courses %}
-    <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
-    {% endfor %}
-    </h1>
+    <h1>{{ course.name }}</h1>
+    <h2>{{ course.description }}</h2>
 </body>
 </html>
