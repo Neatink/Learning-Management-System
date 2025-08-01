@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Course(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -11,3 +12,12 @@ class Lesson(models.Model):
     image = models.ImageField(null=True, blank=True)
     video = models.FileField(null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    
+
+class User(AbstractUser):
+    CHOICES = (
+        ('Admin', 'Admin'),
+        ('Student', 'Student'),
+        ('Teacher', 'Teacher'),
+    )
+    role = models.CharField(choices = CHOICES)
