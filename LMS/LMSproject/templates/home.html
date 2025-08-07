@@ -6,6 +6,9 @@
     <title>LMS</title>
 </head>
 <body>
+    <h2>
+        <a href="/profile">Profile</a>
+    </h2>
     <h1>
     {% for course in courses %}
     <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>

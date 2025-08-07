@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, TemplateView
 from django.shortcuts import render
 from .models import *
 from .forms import *
@@ -18,4 +18,8 @@ class CoursesDetailView(DetailView):
 class RegisterUser(CreateView):
     template_name = 'register.html'
     form_class = UserRegisterForm
-    success_url = '/home'
+    success_url = '/login'
+    
+
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
