@@ -1,4 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
@@ -32,4 +34,12 @@ class ChangeUserDataView(UpdateView):
     fields = ['username', 'email', 'first_name', 'last_name']
     
     def get_success_url(self):
-        return reverse_lazy("profile_view", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
+    
+    
+class ChangeUserPasswordView(PasswordChangeView):
+    template_name = "user_change_password.html"
+    form_class = PasswordChangeForm
+    
+    def get_success_url(self):
+        return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
