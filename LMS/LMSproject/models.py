@@ -20,4 +20,5 @@ class User(AbstractUser):
         ('Student', 'Student'),
         ('Teacher', 'Teacher'),
     )
-    role = models.CharField(choices = CHOICES)
+    role = models.CharField(choices = CHOICES, default = 'Student')
+    email = models.EmailField(unique=True)
