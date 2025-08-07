@@ -6,6 +6,10 @@
     <title>Profile</title>
 </head>
 <body>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Вийти з акаунту</button>
+    </form>
     <h1>
     Username: {{ user.username }}<br>
     Email: {{ user.email }}<br>
