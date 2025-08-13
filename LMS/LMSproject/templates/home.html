@@ -6,9 +6,15 @@
     <title>LMS</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
     <h1>
         Вітаю,{{ user.username }}!
     </h1>
+    {% else %}
+    <h1>
+        Please, login to your account!
+    </h1>
+    {% endif %}
     <h2>
         <a href="/profile/{{ user.id }}">Profile</a>
     </h2>

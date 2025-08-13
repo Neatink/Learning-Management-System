@@ -4,6 +4,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class HomeView(ListView):
     template_name = 'home.html'
@@ -11,7 +13,7 @@ class HomeView(ListView):
     context_object_name = 'courses'
     
 
-class CoursesDetailView(DetailView):
+class CoursesDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_course.html'
     model = Course
     context_object_name = 'course'
