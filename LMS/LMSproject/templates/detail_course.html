@@ -8,5 +8,10 @@
 <body>
     <h1>{{ course.name }}</h1>
     <h2>{{ course.description }}</h2>
+    <h1>
+        {% for lesson in lessons %}
+        <a href="/lesson/detail/{{ lesson.id }}">{{ lesson }}</a>
+        {% endfor %}
+    </h1>
 </body>
 </html>

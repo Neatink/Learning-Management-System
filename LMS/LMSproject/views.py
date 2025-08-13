@@ -18,6 +18,17 @@ class CoursesDetailView(LoginRequiredMixin, DetailView):
     model = Course
     context_object_name = 'course'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lessons'] = Lesson.objects.filter(course_id = self.kwargs['pk'])
+        return context
+ 
+
+class LessonsDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'detail_lesson.html'
+    model = Lesson
+    context_object_name = 'lesson'
+    
 
 class RegisterUser(CreateView):
     template_name = 'register.html'
