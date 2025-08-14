@@ -8,7 +8,10 @@
 <body>
     <h1>
         Назва: {{ lesson }}<br>
-        Завдання: {{ lesson.task }}<br>
+        Завдання:<br>
+        {% for task in tasks %}
+        <a href="/task/detail/{{ task.id }}">{{ task }}</a>
+        {% endfor %}
     </h1>
 </body>
 </html>

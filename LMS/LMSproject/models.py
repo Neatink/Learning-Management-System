@@ -10,10 +10,10 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=False, blank=False)
     image = models.ImageField(null=True, blank=True)
     video = models.FileField(null=True, blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -35,7 +35,11 @@ class Task(models.Model):
     name = models.CharField(null=False, blank=False)
     description = models.TextField(null=False, blank=False)
     
+    def __str__(self):
+        return self.name
+    
     
 class AnswerForTask(models.Model):
     task = models.ForeignKey(Task, on_delete = models.CASCADE)
     answer = models.TextField(null=False, blank=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
