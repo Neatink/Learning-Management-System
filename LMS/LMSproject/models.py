@@ -11,7 +11,6 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-    task = models.TextField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
     video = models.FileField(null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -29,3 +28,14 @@ class User(AbstractUser):
     role = models.CharField(choices = CHOICES, default = 'Student')
     email = models.EmailField(unique=True)
     username = models.CharField(unique=True, blank=False, null=False)
+    
+
+class Task(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    name = models.CharField(null=False, blank=False)
+    description = models.TextField(null=False, blank=False)
+    
+    
+class AnswerForTask(models.Model):
+    task = models.ForeignKey(Task, on_delete = models.CASCADE)
+    answer = models.TextField(null=False, blank=False)
