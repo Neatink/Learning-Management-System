@@ -15,4 +15,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('lesson/detail/<pk>', LessonsDetailView.as_view(), name='lesson_detail'),
     path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
+    path('denied/', AccessDeniedView.as_view(), name='access_denied_view'),
 ]

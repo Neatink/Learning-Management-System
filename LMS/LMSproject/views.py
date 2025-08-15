@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
@@ -6,6 +6,7 @@ from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from .mixins import *
 
 class HomeView(ListView):
     template_name = 'home.html'
@@ -46,7 +47,7 @@ class ProfileView(LoginRequiredMixin, DetailView):
     model = User
 
 
-class ChangeUserDataView(LoginRequiredMixin, UpdateView):
+class ChangeUserDataView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     template_name = "user_change_data.html"
     model = User
     fields = ['username', 'email', 'first_name', 'last_name']
@@ -57,7 +58,7 @@ class ChangeUserDataView(LoginRequiredMixin, UpdateView):
     
 class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
     template_name = "user_change_password.html"
-    form_class = PasswordChangeForm
+    form_class = PasswordChangeForm  
     
     def get_success_url(self):
         return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
@@ -83,3 +84,7 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class(instance=self.get_answer_user())
         return context
+    
+
+class AccessDeniedView(TemplateView):
+    template_name = 'denied.html'
