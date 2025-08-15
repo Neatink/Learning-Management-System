@@ -68,8 +68,11 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
     model = Task
     form_class = AnswerForTaskForm
     
+    def get_answer_user(self):
+        return AnswerForTask.objects.filter(task_id = self.kwargs['pk'], user_id = self.request.user).first()
+    
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, instance=AnswerForTask.objects.filter(task_id = self.kwargs['pk']).first())
+        form = self.form_class(request.POST, instance=self.get_answer_user())
         if form.is_valid():
             form.instance.task = self.get_object()
             form.instance.user = self.request.user
@@ -78,5 +81,5 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
         
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.form_class(instance=AnswerForTask.objects.filter(task_id = self.kwargs['pk']).first())
+        context['form'] = self.form_class(instance=self.get_answer_user())
         return context
