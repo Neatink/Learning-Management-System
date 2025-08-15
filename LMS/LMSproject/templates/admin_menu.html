@@ -19,7 +19,18 @@
         </h2>
         {% for course in courses %}
         <h3>
-            <a href="/course/update/{{ course.id }}">Курс {{ course.id }}({{ course }})</a>
+            <a href="/course/update/{{ course.id }}">{{ course }}</a>
+        </h3>
+        {% endfor %}
+    </h1>
+    <h1>
+        Видалити:<br>
+        <h2>
+            Курси:
+        </h2>
+        {% for course in courses %}
+        <h3>
+            <a href="/course/delete/{{ course.id }}">{{ course }}</a>
         </h3>
         {% endfor %}
     </h1>

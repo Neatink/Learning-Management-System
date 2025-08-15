@@ -6,6 +6,10 @@
     <title>Update course</title>
 </head>
 <body>
-    {{ form.as_p }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button input type="submit">Оновити</button>
+    </form>
 </body>
 </html>

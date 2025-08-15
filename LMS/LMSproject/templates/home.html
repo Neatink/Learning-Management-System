@@ -9,11 +9,18 @@
     {% if user.is_authenticated %}
     <h1>
         Вітаю,{{ user.username }}!<br>
+        {% if user.role == 'Admin' %}
         <a href="/admin-menu">Адмін меню</a>
+        {% endif %}
     </h1>
     <h2>
         <a href="/profile/{{ user.id }}">Профіль</a>
     </h2>
+    <h1>
+    {% for course in courses %}
+    <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
+    {% endfor %}
+    </h1>    
     {% else %}
     <h1>
         Please, login to your account!
@@ -22,10 +29,5 @@
         <a href="/login">Логін</a>
     </h2>
     {% endif %}
-    <h1>
-    {% for course in courses %}
-    <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
-    {% endfor %}
-    </h1>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, TemplateView, DeleteView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
@@ -39,7 +39,7 @@ class LessonsDetailView(LoginRequiredMixin, DetailView):
 class RegisterUserView(CreateView):
     template_name = 'register.html'
     form_class = UserRegisterForm
-    success_url = '/login'
+    success_url = reverse_lazy('login_view')
     
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -101,11 +101,17 @@ class AdminMenuView(LoginRequiredMixin, UserIsAdminMixin, TemplateView):
 class CreateCourseView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     template_name = 'create_course.html'
     form_class = CourseForm
-    success_url = '/admin-menu'
+    success_url = reverse_lazy('admin_menu_view')
 
 
 class UpdateCourseView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
-    template_name = 'create_course.html'
+    template_name = 'update_course.html'
     form_class = CourseForm
     model = Course
-    success_url = '/admin-menu'
+    success_url = reverse_lazy('admin_menu_view')
+
+
+class DeleteCourseView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
+    model = Course
+    template_name = 'delete_course.html'
+    success_url = reverse_lazy('admin_menu_view')

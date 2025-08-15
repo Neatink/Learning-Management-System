@@ -6,7 +6,7 @@
     <title>Profile</title>
 </head>
 <body>
-    <form method="post" action="{% url 'logout' %}">
+    <form method="post" action="{% url 'logout_view' %}">
         {% csrf_token %}
         <button type="submit">Вийти з акаунту</button>
     </form>

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Course</title>
+    <title>Delete course</title>
 </head>
 <body>
     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button input type="submit">Створити</button>
+    {% csrf_token %}
+    <h1>
+        Ви впевнені що хочете видалити {{ course }}?
+    </h1>
+    <button type="submit">Видалити</button>
     </form>
 </body>
 </html>

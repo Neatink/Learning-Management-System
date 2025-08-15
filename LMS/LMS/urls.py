@@ -19,4 +19,5 @@ urlpatterns = [
     path('admin-menu/', AdminMenuView.as_view(), name='admin_menu_view'),
     path('course/create', CreateCourseView.as_view(), name='course_create_view'),
     path('course/update/<pk>', UpdateCourseView.as_view(), name='course_update_view'),
+    path('course/delete/<pk>', DeleteCourseView.as_view(), name='course_delete_view'),
 ]
