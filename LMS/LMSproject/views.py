@@ -1,12 +1,11 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import *
 from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
-
+from django.shortcuts import redirect
 
 class HomeView(ListView):
     template_name = 'home.html'
@@ -67,12 +66,17 @@ class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
 class TasksDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_task.html'
     model = Task
-    context_object_name = 'task'
+    form_class = AnswerForTaskForm
     
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.instance.task = self.get_object()
+            form.instance.user = self.request.user
+            form.save()
+            return redirect('task_detail', self.kwargs['pk'])
     
-class AnswerForTaskView(LoginRequiredMixin, View):
-    
-    def get(self, request, *args, **kwargs):
-        task = Task.objects.get(id = self.kwargs['pk'])
-        AnswerForTask.objects.create(task = task, answer = 'hello', user = self.request.user)
-        return HttpResponseRedirect("/home")
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form_class
+        return context

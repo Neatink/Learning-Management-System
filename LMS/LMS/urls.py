@@ -15,5 +15,4 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('lesson/detail/<pk>', LessonsDetailView.as_view(), name='lesson_detail'),
     path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
-    path('task/answer/<pk>', AnswerForTaskView.as_view(), name='answer_for_task_view'),
 ]

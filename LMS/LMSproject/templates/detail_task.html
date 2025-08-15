@@ -10,7 +10,11 @@
         Назва: {{ task }}<br>
         Завдання: {{ task.description }}<br>
         ID: {{ task.id }}<br>
-        <a href="/task/answer/{{ task.id }}">Відповісти</a>
     </h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button input type="submit">Відповісти</button>
+    </form>
 </body>
 </html>
