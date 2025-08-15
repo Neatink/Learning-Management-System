@@ -1,7 +1,6 @@
-from .models import User
+from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import AnswerForTask
 
 class UserRegisterForm(UserCreationForm):
     class Meta:
@@ -16,3 +15,17 @@ class AnswerForTaskForm(forms.ModelForm):
         labels = {
             'answer': "Ваша відповідь:"
             }
+        
+
+class CreateCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['name','description']
+        labels = {
+            'name': 'Назва',
+            'description': 'Опис'
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'autofocus': True,'placeholder': 'Назва курса..'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Опис курса..'})
+        }

@@ -88,3 +88,13 @@ class TasksDetailView(LoginRequiredMixin, UserIsStudentMixin, DetailView):
 
 class AccessDeniedView(TemplateView):
     template_name = 'denied.html'
+    
+
+class AdminMenuView(LoginRequiredMixin, UserIsAdminMixin, TemplateView):
+    template_name = 'admin_menu.html'
+    
+
+class CreateCourseView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
+    template_name = 'create_course.html'
+    form_class = CreateCourseForm
+    success_url = '/admin-menu'
