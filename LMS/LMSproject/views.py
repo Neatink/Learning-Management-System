@@ -69,14 +69,14 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
     form_class = AnswerForTaskForm
     
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, instance=AnswerForTask.objects.filter(task_id = self.kwargs['pk']).first())
         if form.is_valid():
             form.instance.task = self.get_object()
             form.instance.user = self.request.user
             form.save()
             return redirect('task_detail', self.kwargs['pk'])
-    
+        
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.form_class
+        context['form'] = self.form_class(instance=AnswerForTask.objects.filter(task_id = self.kwargs['pk']).first())
         return context

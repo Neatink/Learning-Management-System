@@ -4,14 +4,15 @@ from django import forms
 from .models import AnswerForTask
 
 class UserRegisterForm(UserCreationForm):
-
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
         
 
 class AnswerForTaskForm(forms.ModelForm):
-    
     class Meta:
         model = AnswerForTask
         fields = ['answer']
+        labels = {
+            'answer': "Ваша відповідь:"
+            }
