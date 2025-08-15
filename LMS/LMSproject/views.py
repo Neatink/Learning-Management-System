@@ -64,7 +64,7 @@ class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
         return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
     
 
-class TasksDetailView(LoginRequiredMixin, DetailView):
+class TasksDetailView(LoginRequiredMixin, UserIsStudentMixin, DetailView):
     template_name = 'detail_task.html'
     model = Task
     form_class = AnswerForTaskForm
