@@ -93,8 +93,19 @@ class AccessDeniedView(TemplateView):
 class AdminMenuView(LoginRequiredMixin, UserIsAdminMixin, TemplateView):
     template_name = 'admin_menu.html'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+        return context
 
 class CreateCourseView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     template_name = 'create_course.html'
-    form_class = CreateCourseForm
+    form_class = CourseForm
+    success_url = '/admin-menu'
+
+
+class UpdateCourseView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+    template_name = 'create_course.html'
+    form_class = CourseForm
+    model = Course
     success_url = '/admin-menu'

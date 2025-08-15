@@ -7,8 +7,21 @@
 </head>
 <body>
     <h1>
-        Створення:<br>
-        <a href="/course/create">Курс</a>
+        Створити:<br>
+        <h2>
+            <a href="/course/create">Курс</a>
+        </h2>
+    </h1>
+    <h1>
+        Редагувати:<br>
+        <h2>
+            Курси:
+        </h2>
+        {% for course in courses %}
+        <h3>
+            <a href="/course/update/{{ course.id }}">Курс {{ course.id }}({{ course }})</a>
+        </h3>
+        {% endfor %}
     </h1>
 </body>
 </html>
