@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Login</title>
 </head>
 <body>
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Увійти</button>
-    </form>
+{% block content %}
+<div class="auth-page">
+<div class="bg-panel auth-card">
+<h2>Увійти</h2>
+<form method="post" class="mt-1">
+{% csrf_token %}
+{{ form.as_p }}
+<div class="mt-1">
+<button type="submit" class="btn btn-primary">Увійти</button>
+<a href="/register" class="btn" style="margin-left:8px">Зареєструватися</a>
+</div>
+</form>
+</div>
+</div>
+{% endblock %}
 </body>
 </html>

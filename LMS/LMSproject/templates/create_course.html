@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Create Course</title>
 </head>
 <body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button input type="submit">Створити</button>
-    </form>
-</body>
+{% block content %}
+<div class="bg-panel">
+<h2>Створити курс</h2>
+<form method="post" class="mt-1">
+{% csrf_token %}
+{{ form.as_p }}
+<div class="mt-1">
+<button type="submit" class="btn btn-primary">Створити</button>
+<a href="/admin-menu" class="btn" style="margin-left:8px">Назад</a>
+</div>
+</form>
+</div>
+{% endblock %}
 </html>

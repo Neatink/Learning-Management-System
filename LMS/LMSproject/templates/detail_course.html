@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Detail Course</title>
 </head>
 <body>
-    <h1>{{ course.name }}</h1>
-    <h2>{{ course.description }}</h2>
-    <h1>
-        {% for lesson in lessons %}
-        <a href="/lesson/detail/{{ lesson.id }}">{{ lesson }}</a>
-        {% endfor %}
-    </h1>
+{% block content %}
+<div class="bg-panel">
+<h1>{{ course.name }}</h1>
+<h2 class="text-muted">{{ course.description }}</h2>
+
+
+<div class="mt-1">
+<h3>Уроки</h3>
+<div class="course-list">
+{% for lesson in lessons %}
+<a href="/lesson/detail/{{ lesson.id }}">{{ lesson }}</a>
+{% empty %}
+<div class="alert">Уроків немає</div>
+{% endfor %}
+</div>
+</div>
+
+
+</div>
+{% endblock %}
 </body>
 </html>

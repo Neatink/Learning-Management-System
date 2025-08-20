@@ -3,13 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Update course</title>
 </head>
 <body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button input type="submit">Оновити</button>
-    </form>
+{% block content %}
+<div class="bg-panel">
+<h2>Оновити курс</h2>
+<form method="post" class="mt-1">
+{% csrf_token %}
+{{ form.as_p }}
+<div class="mt-1">
+<button type="submit" class="btn btn-primary">Оновити</button>
+<a href="/admin-menu" class="btn" style="margin-left:8px">Назад</a>
+</div>
+</form>
+</div>
+{% endblock %}
 </body>
 </html>

@@ -1,33 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LMS</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/static/styles.css" />
+<title>LMS</title>
 </head>
 <body>
-    {% if user.is_authenticated %}
-    <h1>
-        Вітаю,{{ user.username }}!<br>
+<header class="container">
+{% if user.is_authenticated %}
+  <nav class="flex" style="justify-content:space-between;align-items:center">
+    <div class="flex">
+        <span class="text-muted">Привіт, {{ user.username }}</span>
+    </div>
+
+    <div class="flex">
+        <a href="/profile/{{ user.id }}" class="link-btn">Профіль</a>
         {% if user.role == 'Admin' %}
-        <a href="/admin-menu">Адмін меню</a>
+          <a href="/admin-menu" class="link-btn">Адмін меню</a>
         {% endif %}
-    </h1>
-    <h2>
-        <a href="/profile/{{ user.id }}">Профіль</a>
-    </h2>
-    <h1>
-    {% for course in courses %}
-    <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
-    {% endfor %}
-    </h1>    
+        <form method="post" action="{% url 'logout_view' %}" style="display:inline-block;margin-left:8px">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Вийти</button>
+        </form>
+      {% else %}
+        <a href="/login" class="btn btn-primary">Логін</a>
+        <a href="/register" style="margin-left:8px" class="btn">Реєстрація</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>
+
+<main class="container mt-1">
+  <div class="hero-bg">
+    <h1>LMS</h1>
+    <p class="text-muted">LMS — це Learning Management System</p>
+  </div>
+
+  <section class="mt-1">
+    {% if user.is_authenticated %}
+      <div class="bg-panel">
+        <h2>Список доступних курсів</h2>
+        <p class="text-muted">Оберіть курс, щоб перейти до його сторінки.</p>
+
+        <div class="course-list">
+          {% for course in courses %}
+            <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
+          {% empty %}
+            <div class="alert">У вас поки немає курсів.</div>
+          {% endfor %}
+        </div>
+
+      </div>
     {% else %}
-    <h1>
-        Please, login to your account!
-    </h1>
-    <h2>
-        <a href="/login">Логін</a>
-    </h2>
+      <div class="page-center">
+        <h1>Щоб переглянути список курсів увійдіть до акаунту!</h1>
+      </div>
     {% endif %}
+  </section>
+</main>
 </body>
 </html>

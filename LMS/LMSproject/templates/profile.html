@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Profile</title>
 </head>
 <body>
-    <form method="post" action="{% url 'logout_view' %}">
-        {% csrf_token %}
-        <button type="submit">Вийти з акаунту</button>
-    </form>
-    <h1>
-    Username: {{ user.username }}<br>
-    Email: {{ user.email }}<br>
-    Firstname: {{ user.first_name }}<br>
-    Lastname: {{ user.last_name }}<br>
-    ID: {{ user.id }}
-    </h1>
-    <h1>
-        <a href="/user_change_data/{{ user.id }}">Змінити дані</a>
-    </h1>
-    <h1>
-        <a href="/user_change_password">Змінити пароль</a>
-    </h1>
+{% block content %}
+<div class="bg-panel">
+<h2>Профіль</h2>
+<div class="profile-box mt-1">
+<h3>Username: {{ user.username }}</h3>
+<p class="text-muted">Email: {{ user.email }}</p>
+<p class="text-muted">Ім'я: {{ user.first_name }} {{ user.last_name }}</p>
+<p class="text-muted">ID: {{ user.id }}</p>
+
+
+<div class="mt-1">
+<a href="/user_change_data/{{ user.id }}" class="btn">Змінити дані</a>
+<a href="/user_change_password" class="btn" style="margin-left:8px">Змінити пароль</a>
+</div>
+
+
+<form method="post" action="{% url 'logout_view' %}" class="mt-1">
+{% csrf_token %}
+<button type="submit" class="btn btn-primary">Вийти з акаунту</button>
+</form>
+</div>
+</div>
+{% endblock %}
 </body>
 </html>

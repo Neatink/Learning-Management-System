@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Denied</title>
 </head>
 <body>
-    <h1>
-        <p>Access denied!</p>
-    </h1>
+{% block content %}
+<div class="confirm">
+<h2>Access denied!</h2>
+<p class="text-muted">Ви не маєте прав для перегляду цієї сторінки.</p>
+<a href="/home" class="btn btn-primary mt-1">На головну</a>
+</div>
+{% endblock %}
 </body>
 </html>

@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Admin menu</title>
 </head>
 <body>
-    <h1>
-        Створити:<br>
-        <h2>
-            <a href="/course/create">Курс</a>
-        </h2>
-    </h1>
-    <h1>
-        Редагувати:<br>
-        <h2>
-            Курси:
-        </h2>
-        {% for course in courses %}
-        <h3>
-            <a href="/course/update/{{ course.id }}">{{ course }}</a>
-        </h3>
-        {% endfor %}
-    </h1>
-    <h1>
-        Видалити:<br>
-        <h2>
-            Курси:
-        </h2>
-        {% for course in courses %}
-        <h3>
-            <a href="/course/delete/{{ course.id }}">{{ course }}</a>
-        </h3>
-        {% endfor %}
-    </h1>
+
+{% block content %}
+<div class="bg-panel">
+<h2>Адмін меню</h2>
+<h3>Створити</h3>
+<div class="flex mt-1">
+<a href="/course/create" class="btn btn-primary">Курс</a>
+</div>
+
+
+<div class="mt-1">
+<h3>Редагувати курси</h3>
+<div class="course-list">
+{% for course in courses %}
+<a href="/course/update/{{ course.id }}">{{ course }}</a>
+{% empty %}
+<div class="alert">Немає курсів</div>
+{% endfor %}
+</div>
+</div>
+
+
+<div class="mt-1">
+<h3>Видалити курси</h3>
+<div class="course-list">
+{% for course in courses %}
+<a href="/course/delete/{{ course.id }}">Видалити «{{ course }}»</a>
+{% empty %}
+<div class="alert">Немає курсів</div>
+{% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}
 </body>
 </html>

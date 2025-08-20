@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Detail Lesson</title>
 </head>
 <body>
-    <h1>
-        Назва: {{ lesson }}<br>
-        Завдання:<br>
-        {% for task in tasks %}
-        <a href="/task/detail/{{ task.id }}">{{ task }}</a>
-        {% endfor %}
-    </h1>
+{% block content %}
+<div class="bg-panel">
+<h1>Назва: {{ lesson }}</h1>
+<h3 class="text-muted">Завдання</h3>
+<div class="course-list">
+{% for task in tasks %}
+<a href="/task/detail/{{ task.id }}">{{ task }}</a>
+{% empty %}
+<div class="alert">Завдань немає</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}
 </body>
 </html>

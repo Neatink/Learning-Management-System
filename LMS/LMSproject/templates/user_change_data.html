@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
     <title>Change User data</title>
 </head>
 <body>
-    <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Змінити</button>
-    </form>
+{% block content %}
+<div class="bg-panel" style="max-width:520px">
+<h2>Змінити дані</h2>
+<form method="post" class="mt-1">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" class="btn btn-primary">Змінити</button>
+</form>
+</div>
+{% endblock %}
 </body>
 </html>
