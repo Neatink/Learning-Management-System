@@ -1,44 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
-    <title>Admin menu</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/styles.css">
+  <title>Admin menu</title>
 </head>
 <body>
-
 {% block content %}
-<div class="bg-panel">
-<h2>Адмін меню</h2>
-<h3>Створити</h3>
-<div class="flex mt-1">
-<a href="/course/create" class="btn btn-primary">Курс</a>
-</div>
+<div class="container">
+  <h2>Адмін меню</h2>
 
+  <div class="admin-grid mt-1">
+    <section class="admin-col">
+      <h3 class="admin-col-title">Курс</h3>
+      <a href="/course/create" class="btn btn-primary btn-block">Створити</a>
 
-<div class="mt-1">
-<h3>Редагувати курси</h3>
-<div class="course-list">
-{% for course in courses %}
-<a href="/course/update/{{ course.id }}">{{ course }}</a>
-{% empty %}
-<div class="alert">Немає курсів</div>
-{% endfor %}
-</div>
-</div>
+      <ul class="list mt-1">
+        {% for course in courses %}
+          <li class="list-item">
+            <p class="item-link" title="{{ course }}">{{ course|truncatechars:36 }}</p>
+            <div class="actions">
+              <a href="/course/update/{{ course.id }}" class="btn btn-edit">Редагувати</a>
+              <a href="/course/delete/{{ course.id }}" class="btn btn-danger">Видалити</a>
+            </div>
+          </li>
+        {% empty %}
+          <li class="list-empty alert">Немає курсів</li>
+        {% endfor %}
+      </ul>
+    </section>
 
+    <section class="admin-col">
+      <h3 class="admin-col-title">Урок</h3>
+      <a href="/course/create" class="btn btn-primary btn-block">Створити</a>
 
-<div class="mt-1">
-<h3>Видалити курси</h3>
-<div class="course-list">
-{% for course in courses %}
-<a href="/course/delete/{{ course.id }}">Видалити «{{ course }}»</a>
-{% empty %}
-<div class="alert">Немає курсів</div>
-{% endfor %}
-</div>
-</div>
+      <ul class="list mt-1">
+        {% for lesson in lessons %}
+          <li class="list-item">
+            <p class="item-link">{{ lesson }}</p>
+            <div class="actions">
+              <a href="#" class="btn btn-edit">Редагувати</a>
+              <a href="#" class="btn btn-danger">Видалити</a>
+            </div>
+          </li>
+        {% empty %}
+          <li class="list-empty alert">Немає уроків</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="admin-col">
+      <h3 class="admin-col-title">Завдання</h3>
+      <a href="/course/create" class="btn btn-primary btn-block">Створити</a>
+
+      <ul class="list mt-1">
+        {% for task in tasks %}
+          <li class="list-item">
+            <p class="item-link">{{ task }}</p>
+            <div class="actions">
+              <a href="#" class="btn btn-edit">Редагувати</a>
+              <a href="#" class="btn btn-danger">Видалити</a>
+            </div>
+          </li>
+        {% empty %}
+          <li class="list-empty alert">Немає завдань</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
 </div>
 {% endblock %}
 </body>

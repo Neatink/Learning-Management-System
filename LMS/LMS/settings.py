@@ -128,4 +128,4 @@ LOGIN_REDIRECT_URL = 'home_view'
 
 LOGOUT_REDIRECT_URL = 'home_view'
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'login_view'
