@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from LMSproject.views import *
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,4 +22,7 @@ urlpatterns = [
     path('course/create', CreateCourseView.as_view(), name='course_create_view'),
     path('course/update/<pk>', UpdateCourseView.as_view(), name='course_update_view'),
     path('course/delete/<pk>', DeleteCourseView.as_view(), name='course_delete_view'),
+    path('lesson/create', CreateLessonView.as_view(), name='_create_view'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

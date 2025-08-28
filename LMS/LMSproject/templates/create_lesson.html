@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+<title>Create Lesson</title>
+</head>
+<body>
+
+<div class="container">
+<div class="bg-panel">
+<h2>Створити урок</h2>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+
+<div class="form-row">
+<label class="field-label" for="id_course">{{ form.course.label }}</label>
+{{ form.course }}
+{% if form.course.errors %}
+<div class="field-errors">{{ form.course.errors }}</div>
+{% endif %}
+</div>
+
+
+<div class="form-row">
+<label class="field-label" for="id_name">{{ form.name.label }}</label>
+{{ form.name }}
+{% if form.name.errors %}
+<div class="field-errors">{{ form.name.errors }}</div>
+{% endif %}
+</div>
+
+
+<div class="form-row file-input">
+<label class="field-label">{{ form.image.label }}</label>
+<label class="file-btn" for="id_image">Обрати фотографію</label>
+{{ form.image }}
+{% if form.image.errors %}
+<div class="field-errors">{{ form.image.errors }}</div>
+{% endif %}
+</div>
+
+
+<div class="form-row file-input">
+<label class="field-label">{{ form.video.label }}</label>
+<label class="file-btn" for="id_video">Обрати відео</label>
+{{ form.video }}
+{% if form.video.errors %}
+<div class="field-errors">{{ form.video.errors }}</div>
+{% endif %}
+</div>
+
+
+<div class="mt-1">
+<button type="submit" class="btn btn-primary">Створити</button>
+<a href="/admin-menu" class="btn-secondary">Назад</a>
+</div>
+
+</form>
+</div>
+</div>
+</body>
+</html>

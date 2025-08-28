@@ -117,3 +117,9 @@ class DeleteCourseView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
     model = Course
     template_name = 'delete_course.html'
     success_url = reverse_lazy('admin_menu_view')
+    
+
+class CreateLessonView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
+    template_name = 'create_lesson.html'
+    form_class = LessonForm
+    success_url = reverse_lazy('admin_menu_view')

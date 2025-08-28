@@ -12,8 +12,8 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=False, blank=False)
-    image = models.ImageField(null=True, blank=True)
-    video = models.FileField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
+    video = models.FileField(null=True, blank=True, upload_to='videos/')
 
     def __str__(self):
         return self.name
