@@ -42,7 +42,7 @@
             <a href="/lesson/detail/{{ lesson.id }}" class="item-link">{{ lesson }}</p>
             <div class="actions">
               <a href="/lesson/update/{{ lesson.id }}" class="btn btn-edit">Редагувати</a>
-              <a href="#" class="btn btn-danger">Видалити</a>
+              <a href="/lesson/delete/{{ lesson.id }}" class="btn btn-danger">Видалити</a>
             </div>
           </li>
         {% empty %}
