@@ -123,3 +123,10 @@ class CreateLessonView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     template_name = 'create_lesson.html'
     form_class = LessonForm
     success_url = reverse_lazy('admin_menu_view')
+
+
+class UpdateLessonView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+    template_name = 'update_lesson.html'
+    form_class = LessonForm
+    model = Lesson
+    success_url = reverse_lazy('admin_menu_view')

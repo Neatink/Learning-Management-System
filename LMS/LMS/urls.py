@@ -22,7 +22,8 @@ urlpatterns = [
     path('course/create', CreateCourseView.as_view(), name='course_create_view'),
     path('course/update/<pk>', UpdateCourseView.as_view(), name='course_update_view'),
     path('course/delete/<pk>', DeleteCourseView.as_view(), name='course_delete_view'),
-    path('lesson/create', CreateLessonView.as_view(), name='_create_view'),
+    path('lesson/create', CreateLessonView.as_view(), name='lesson_create_view'),
+    path('lesson/update/<pk>', UpdateLessonView.as_view(), name='lesson_update_view'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
