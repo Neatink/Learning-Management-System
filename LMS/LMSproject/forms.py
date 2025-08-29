@@ -44,3 +44,18 @@ class LessonForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Назва уроку..'})
         }
+
+
+class TaskForm(forms.ModelForm):
+    lesson = forms.ModelChoiceField(queryset = Lesson.objects.all(), empty_label = None, label = 'Урок')
+    class Meta:
+        model = Task
+        fields = ['lesson', 'name', 'description']
+        labels = {
+            'name': 'Назва',
+            'description': 'Опис',
+        }
+        widgets = {
+            'name': forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Назва завдання..'}),
+            'description': forms.Textarea(attrs={'placeholder': 'Опис завдання..'})
+        }

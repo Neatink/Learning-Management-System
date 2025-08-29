@@ -10,9 +10,9 @@ class UserIsOwnerMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class UserIsStudentMixin:
+class UserIsNotTeacherMixin:
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.role != 'Student':
+        if self.request.user.role == 'Teacher':
             return access_denied_redirect()
         return super().dispatch(request, *args, **kwargs)
     

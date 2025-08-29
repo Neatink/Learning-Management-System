@@ -53,12 +53,12 @@
 
     <section class="admin-col">
       <h3 class="admin-col-title">Завдання</h3>
-      <a href="/course/create" class="btn btn-primary btn-block">Створити</a>
+      <a href="/task/create" class="btn btn-primary btn-block">Створити</a>
 
       <ul class="list mt-1">
         {% for task in tasks %}
           <li class="list-item">
-            <p class="item-link">{{ task }}</p>
+            <a href="/task/detail/{{ task.id }}" class="item-link">{{ task }}</a>
             <div class="actions">
               <a href="#" class="btn btn-edit">Редагувати</a>
               <a href="#" class="btn btn-danger">Видалити</a>

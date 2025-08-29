@@ -14,8 +14,6 @@ urlpatterns = [
     
     path('logout/', auth_views.LogoutView.as_view(), name='logout_view'),
     
-    path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
-    
     path('denied/', AccessDeniedView.as_view(), name='access_denied_view'),
     
     path('admin-menu/', AdminMenuView.as_view(), name='admin_menu_view'),
@@ -35,6 +33,9 @@ urlpatterns = [
     path('lesson/create', CreateLessonView.as_view(), name='lesson_create_view'),
     path('lesson/update/<pk>', UpdateLessonView.as_view(), name='lesson_update_view'),
     path('lesson/delete/<pk>', DeleteLessonView.as_view(), name='lesson_delete_view'),
+    
+    path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
+    path('task/create', CreateTaskView.as_view(), name='task_create_view'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

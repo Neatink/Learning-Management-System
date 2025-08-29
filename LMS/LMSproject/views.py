@@ -14,7 +14,7 @@ class HomeView(ListView):
     context_object_name = 'courses'
     
 
-class CoursesDetailView(LoginRequiredMixin, DetailView):
+class CoursesDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
     template_name = 'detail_course.html'
     model = Course
     context_object_name = 'course'
@@ -25,7 +25,7 @@ class CoursesDetailView(LoginRequiredMixin, DetailView):
         return context
  
 
-class LessonsDetailView(LoginRequiredMixin, DetailView):
+class LessonsDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
     template_name = 'detail_lesson.html'
     model = Lesson
     context_object_name = 'lesson'
@@ -64,7 +64,7 @@ class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
         return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
     
 
-class TasksDetailView(LoginRequiredMixin, UserIsStudentMixin, DetailView):
+class TasksDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
     template_name = 'detail_task.html'
     model = Task
     form_class = AnswerForTaskForm
@@ -135,4 +135,10 @@ class UpdateLessonView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
 class DeleteLessonView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
     template_name = 'delete_lesson.html'
     model = Lesson
+    success_url = reverse_lazy('admin_menu_view')
+    
+    
+class CreateTaskView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
+    template_name = 'create_task.html'
+    form_class = TaskForm
     success_url = reverse_lazy('admin_menu_view')
