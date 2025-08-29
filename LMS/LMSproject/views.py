@@ -149,3 +149,9 @@ class UpdateTaskView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     form_class = TaskForm
     model = Task
     success_url = reverse_lazy('admin_menu_view')
+
+
+class DeleteTaskView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
+    template_name = 'delete_task.html'
+    model = Task
+    success_url = reverse_lazy('admin_menu_view')
