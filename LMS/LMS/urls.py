@@ -36,6 +36,7 @@ urlpatterns = [
     
     path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
     path('task/create', CreateTaskView.as_view(), name='task_create_view'),
+    path('task/update/<pk>', UpdateTaskView.as_view(), name='task_update_view'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -142,3 +142,10 @@ class CreateTaskView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     template_name = 'create_task.html'
     form_class = TaskForm
     success_url = reverse_lazy('admin_menu_view')
+
+
+class UpdateTaskView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+    template_name = 'update_task.html'
+    form_class = TaskForm
+    model = Task
+    success_url = reverse_lazy('admin_menu_view')
