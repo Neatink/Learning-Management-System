@@ -22,3 +22,10 @@ class UserIsAdminMixin:
         if self.request.user.role != 'Admin':
             return access_denied_redirect()
         return super().dispatch(request, *args, **kwargs)
+    
+
+class UserIsNotStudentMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.role == 'Student':
+            return access_denied_redirect()
+        return super().dispatch(request, *args, **kwargs)

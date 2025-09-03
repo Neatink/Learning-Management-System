@@ -162,7 +162,7 @@ class DeleteTaskView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
     success_url = reverse_lazy('admin_menu_view')
     
 
-class GradeTaskUser(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+class GradeTaskUser(LoginRequiredMixin, UserIsNotStudentMixin, UpdateView):
     template_name = 'grade_task_user.html'
     model = AnswerForTask
     form_class = GradeForm
