@@ -26,17 +26,17 @@ urlpatterns = [
     path('user_change_data/<pk>', ChangeUserDataView.as_view(), name='user_change_data_view'),
     path('user_change_password/', ChangeUserPasswordView.as_view(), name='user_change_password_view'),
 
-    path('course/detail/<pk>', CoursesDetailView.as_view(), name='course_detail'),
+    path('course/detail/<pk>', CoursesDetailView.as_view(), name='course_detail_view'),
     path('course/create', CreateCourseView.as_view(), name='course_create_view'),
     path('course/update/<pk>', UpdateCourseView.as_view(), name='course_update_view'),
     path('course/delete/<pk>', DeleteCourseView.as_view(), name='course_delete_view'),
     
-    path('lesson/detail/<pk>', LessonsDetailView.as_view(), name='lesson_detail'),
+    path('lesson/detail/<pk>', LessonsDetailView.as_view(), name='lesson_detail_view'),
     path('lesson/create', CreateLessonView.as_view(), name='lesson_create_view'),
     path('lesson/update/<pk>', UpdateLessonView.as_view(), name='lesson_update_view'),
     path('lesson/delete/<pk>', DeleteLessonView.as_view(), name='lesson_delete_view'),
     
-    path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail'),
+    path('task/detail/<pk>', TasksDetailView.as_view(), name='task_detail_view'),
     path('task/create', CreateTaskView.as_view(), name='task_create_view'),
     path('task/update/<pk>', UpdateTaskView.as_view(), name='task_update_view'),
     path('task/delete/<pk>', DeleteTaskView.as_view(), name='task_delete_view'),

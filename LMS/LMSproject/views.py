@@ -78,7 +78,7 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
             form.instance.task = self.get_object()
             form.instance.user = self.request.user
             form.save()
-            return redirect('task_detail', self.kwargs['pk'])
+            return redirect('task_detail_view', self.kwargs['pk'])
         
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
@@ -165,3 +165,6 @@ class GradeTaskUser(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = AnswerForTask
     form_class = GradeForm
     success_url = reverse_lazy('admin_menu_view')
+    
+    def get_success_url(self):
+        return reverse_lazy("task_detail_view", kwargs={"pk": self.object.task.id})
