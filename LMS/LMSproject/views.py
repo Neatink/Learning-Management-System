@@ -165,6 +165,7 @@ class GradeTaskUser(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
     model = AnswerForTask
     form_class = GradeForm
     success_url = reverse_lazy('admin_menu_view')
+    context_object_name = 'answer'
     
     def get_success_url(self):
         return reverse_lazy("task_detail_view", kwargs={"pk": self.object.task.id})

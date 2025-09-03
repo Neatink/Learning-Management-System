@@ -8,6 +8,8 @@
 </head>
 <body>
 <form method="post" class="mt-1">
+<h2>Опис: {{ answer.task.description }}</h2>
+<h4>Студент: {{ answer.user }}</h4>
 {% csrf_token %}
 {{ form.as_p }}
 <div class="mt-1">
