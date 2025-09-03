@@ -14,7 +14,7 @@
     {% if user_grade.grade == 0 %}
     <span class="task-grade" style="color: red;">Не оцінено</span>
     {% else %}
-    <span class="task-grade">{{ user_grade.grade }}</span>
+    <span class="task-grade">Оцінка: {{ user_grade.grade }}</span>
     {% endif %}
 </div>
 <p class="text-muted">Опис: {{ task.description }}</p>
