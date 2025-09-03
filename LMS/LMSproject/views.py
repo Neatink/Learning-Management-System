@@ -73,17 +73,19 @@ class TasksDetailView(LoginRequiredMixin, DetailView):
         return AnswerForTask.objects.filter(task_id = self.kwargs['pk'], user_id = self.request.user).first()
     
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, instance=self.get_answer_user())
-        if form.is_valid():
-            form.instance.task = self.get_object()
-            form.instance.user = self.request.user
-            form.save()
-            return redirect('task_detail_view', self.kwargs['pk'])
+        if request.user.role == 'Student':
+            form = self.form_class(request.POST, instance=self.get_answer_user())
+            if form.is_valid():
+                form.instance.task = self.get_object()
+                form.instance.user = self.request.user
+                form.save()
+                return redirect('task_detail_view', self.kwargs['pk'])
         
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.role == 'Student':
             context['form'] = self.form_class(instance=self.get_answer_user())
+            context['user_grade'] = self.get_answer_user()
         else:
             context['answers'] = AnswerForTask.objects.filter(task_id = self.kwargs['pk'])
         return context

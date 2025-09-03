@@ -9,7 +9,14 @@
 <body>
 {% block content %}
 <div class="bg-panel">
-<h1>Назва: {{ task }}</h1>
+<div class="task-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin: 0;">Назва: {{ task }}</h1>
+    {% if user_grade.grade == 0 %}
+    <span class="task-grade" style="color: red;">Не оцінено</span>
+    {% else %}
+    <span class="task-grade">{{ user_grade.grade }}</span>
+    {% endif %}
+</div>
 <p class="text-muted">Опис: {{ task.description }}</p>
 
 {% if request.user.role == 'Student' %}
@@ -27,7 +34,11 @@
 <div class="answer-title">{{ answer.answer }}</div>
 <div class="answer-username">{{ answer.user }}</div>
 </div>
+{% if answer.grade == 0 %}
+<div class="answer-grade" style="color: red;">Не оцінено</div>
+{% else %}
 <div class="answer-grade">{{ answer.grade }}</div>
+{% endif %}
 </a>
 {% endfor %}
 </div>
