@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Grade Task User</title>
+</head>
+<body>
+<form method="post" class="mt-1">
+{% csrf_token %}
+{{ form.as_p }}
+<div class="mt-1">
+<button type="submit" class="btn btn-primary">Задати оцінку</button>
+</div>
+</form>
+</body>
+</html>

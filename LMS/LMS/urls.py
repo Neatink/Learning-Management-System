@@ -18,6 +18,8 @@ urlpatterns = [
     
     path('admin-menu/', AdminMenuView.as_view(), name='admin_menu_view'),
     
+    path('student/grade/<pk>', GradeTaskUser.as_view(), name='student_grade_view'),    
+    
     path('register/', RegisterUserView.as_view(), name='register_view'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login_view'),
     

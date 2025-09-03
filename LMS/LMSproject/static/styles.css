@@ -271,3 +271,94 @@ background-repeat: no-repeat;
 
 .muted-note{font-size:13px;color:var(--muted);margin-top:8px}
 
+input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color: var(--text);
+  font-size: 16px;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+  background: var(--select-bg);
+  border-left: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0 10px 10px 0;
+  width: 28px;
+  cursor: pointer;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), 
+                    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: 8px 6px, 14px 6px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+input[type=number]::-webkit-inner-spin-button:hover {
+  background-color: rgba(124,77,255,0.15);
+}
+
+form {
+  max-width: 300px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.answer-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.answer-card:hover {
+  border-color: rgba(124,77,255,0.4);
+  background: linear-gradient(180deg, rgba(124,77,255,0.08), rgba(75,29,150,0.06));
+  box-shadow: 0 0 12px rgba(124,77,255,0.4);
+  transform: translateY(-2px);
+}
+
+.answer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.answer-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.answer-username {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.answer-grade {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-400);
+  align-self: center;
+}

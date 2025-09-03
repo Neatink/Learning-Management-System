@@ -59,3 +59,10 @@ class TaskForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Назва завдання..'}),
             'description': forms.Textarea(attrs={'placeholder': 'Опис завдання..'})
         }
+
+
+class GradeForm(forms.ModelForm):
+    grade = forms.IntegerField(max_value=12, min_value=1, label='Оцінка')
+    class Meta:
+        model = AnswerForTask
+        fields = ['grade']

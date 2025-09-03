@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Course(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -43,3 +44,6 @@ class AnswerForTask(models.Model):
     task = models.ForeignKey(Task, on_delete = models.CASCADE)
     answer = models.TextField(null=False, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    grade = models.IntegerField(null=True, blank=True, validators=[
+        MaxValueValidator(12),MinValueValidator(1)
+    ])

@@ -14,7 +14,7 @@ class HomeView(ListView):
     context_object_name = 'courses'
     
 
-class CoursesDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
+class CoursesDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_course.html'
     model = Course
     context_object_name = 'course'
@@ -25,7 +25,7 @@ class CoursesDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
         return context
  
 
-class LessonsDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
+class LessonsDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_lesson.html'
     model = Lesson
     context_object_name = 'lesson'
@@ -64,7 +64,7 @@ class ChangeUserPasswordView(LoginRequiredMixin, PasswordChangeView):
         return reverse_lazy("profile_view", kwargs={"pk": self.request.user.pk})
     
 
-class TasksDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
+class TasksDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_task.html'
     model = Task
     form_class = AnswerForTaskForm
@@ -82,7 +82,10 @@ class TasksDetailView(LoginRequiredMixin, UserIsNotTeacherMixin, DetailView):
         
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.form_class(instance=self.get_answer_user())
+        if self.request.user.role == 'Student':
+            context['form'] = self.form_class(instance=self.get_answer_user())
+        else:
+            context['answers'] = AnswerForTask.objects.filter(task_id = self.kwargs['pk'])
         return context
     
 
@@ -154,4 +157,11 @@ class UpdateTaskView(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
 class DeleteTaskView(LoginRequiredMixin, UserIsAdminMixin, DeleteView):
     template_name = 'delete_task.html'
     model = Task
+    success_url = reverse_lazy('admin_menu_view')
+    
+
+class GradeTaskUser(LoginRequiredMixin, UserIsAdminMixin, UpdateView):
+    template_name = 'grade_task_user.html'
+    model = AnswerForTask
+    form_class = GradeForm
     success_url = reverse_lazy('admin_menu_view')
