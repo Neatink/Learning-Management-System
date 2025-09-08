@@ -26,14 +26,14 @@ class User(AbstractUser):
         ('Student', 'Student'),
         ('Teacher', 'Teacher'),
     )
-    role = models.CharField(choices = CHOICES, default = 'Student')
+    role = models.CharField(choices = CHOICES, default = 'Student', max_length=35)
     email = models.EmailField(unique=True)
-    username = models.CharField(unique=True, blank=False, null=False)
+    username = models.CharField(unique=True, blank=False, null=False, max_length=35)
     
 
 class Task(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    name = models.CharField(null=False, blank=False)
+    name = models.CharField(null=False, blank=False, max_length=60)
     description = models.TextField(null=False, blank=False)
     
     def __str__(self):
@@ -44,6 +44,6 @@ class AnswerForTask(models.Model):
     task = models.ForeignKey(Task, on_delete = models.CASCADE)
     answer = models.TextField(null=False, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    grade = models.IntegerField(null=False, blank=False, default='0', validators=[
+    grade = models.IntegerField(default='0', validators=[
         MaxValueValidator(12),MinValueValidator(0),
     ])
