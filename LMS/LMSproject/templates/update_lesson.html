@@ -3,63 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
-<title>Update Lesson</title>
+<link rel="stylesheet" href="/static/styles.css">
+<title>{% if lesson %}Редагувати{% else %}Створити{% endif %} урок</title>
+<style>
+  .hidden { display: none; }
+  .media-row { display: flex; gap: 10px; margin-top: 10px; }
+</style>
 </head>
 <body>
 
 <div class="container">
-<div class="bg-panel">
-<h2>Оновити урок</h2>
-<form method="post" enctype="multipart/form-data">
-{% csrf_token %}
+  <div class="bg-panel">
+    <h2>{% if lesson %}Редагувати урок{% else %}Створити урок{% endif %}</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-row">
+        <label class="field-label" for="id_course">{{ form.course.label }}</label>
+        {{ form.course }}
+        {% if form.course.errors %}
+          <div class="field-errors">{{ form.course.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-row">
+        <label class="field-label" for="id_name">{{ form.name.label }}</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <div class="field-errors">{{ form.name.errors }}</div>
+        {% endif %}
+      </div>
 
 
-<div class="form-row">
-<label class="field-label" for="id_course">{{ form.course.label }}</label>
-{{ form.course }}
-{% if form.course.errors %}
-<div class="field-errors">{{ form.course.errors }}</div>
-{% endif %}
+      <div class="form-row file-input">
+        <label class="field-label">{{ form.image.label }}</label>
+        <label class="file-btn" for="id_image">Обрати фотографію</label>
+        {{ form.image }}
+
+        <div id="image-preview" class="media-row {% if not lesson or not lesson.image %}hidden{% endif %}">
+          <div class="task-media">
+            <p id="image-name" class="text-muted" style="margin-bottom:6px;">
+              {% if lesson and lesson.image %}Ви завантажили: {{ lesson.image.name }}{% endif %}
+            </p>
+            <img id="preview-img" 
+                 src="{% if lesson and lesson.image %}{{ lesson.image.url }}{% endif %}" 
+                 alt="Прев’ю фото" class="task-img" />
+          </div>
+        </div>
+
+        {% if form.image.errors %}
+          <div class="field-errors">{{ form.image.errors }}</div>
+        {% endif %}
+      </div>
+
+
+      <div class="form-row file-input">
+        <label class="field-label">{{ form.video.label }}</label>
+        <label class="file-btn" for="id_video">Обрати відео</label>
+        {{ form.video }}
+
+        <div id="video-preview" class="media-row {% if not lesson or not lesson.video %}hidden{% endif %}">
+          <div class="task-media">
+            <p id="video-name" class="text-muted" style="margin-bottom:6px;">
+              {% if lesson and lesson.video %}Ви завантажили: {{ lesson.video.name }}{% endif %}
+            </p>
+            <video id="preview-video" controls class="task-video" {% if not lesson or not lesson.video %}style="display:none;"{% endif %}>
+              {% if lesson and lesson.video %}
+                <source src="{{ lesson.video.url }}" type="video/mp4">
+              {% endif %}
+              Ваш браузер не підтримує відео-тег.
+            </video>
+          </div>
+        </div>
+
+        {% if form.video.errors %}
+          <div class="field-errors">{{ form.video.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mt-1">
+        <button type="submit" class="btn btn-primary">
+          {% if lesson %}Зберегти{% else %}Створити{% endif %}
+        </button>
+        <a href="/admin-menu" class="btn-secondary">Назад</a>
+      </div>
+    </form>
+  </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-<div class="form-row">
-<label class="field-label" for="id_name">{{ form.name.label }}</label>
-{{ form.name }}
-{% if form.name.errors %}
-<div class="field-errors">{{ form.name.errors }}</div>
-{% endif %}
-</div>
+  const imageInput = document.getElementById("id_image");
+  const imagePreviewContainer = document.getElementById("image-preview");
+  const imagePreview = document.getElementById("preview-img");
+  const imageName = document.getElementById("image-name");
 
-
-<div class="form-row file-input">
-<label class="field-label">{{ form.image.label }}</label>
-<label class="file-btn" for="id_image">Обрати фотографію</label>
-{{ form.image }}
-{% if form.image.errors %}
-<div class="field-errors">{{ form.image.errors }}</div>
-{% endif %}
-</div>
-
-
-<div class="form-row file-input">
-<label class="field-label">{{ form.video.label }}</label>
-<label class="file-btn" for="id_video">Обрати відео</label>
-{{ form.video }}
-{% if form.video.errors %}
-<div class="field-errors">{{ form.video.errors }}</div>
-{% endif %}
-</div>
+  if (imageInput) {
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          imagePreview.src = e.target.result;
+          imageName.textContent = `Ви обрали картинку: ${file.name}`;
+          imagePreviewContainer.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreviewContainer.classList.add("hidden");
+        imagePreview.src = "";
+        imageName.textContent = "";
+      }
+    });
+  }
 
 
-<div class="mt-1">
-<button type="submit" class="btn btn-primary">Оновити</button>
-<a href="/admin-menu" class="btn-secondary">Назад</a>
-</div>
+  const videoInput = document.getElementById("id_video");
+  const videoPreviewContainer = document.getElementById("video-preview");
+  const videoPreview = document.getElementById("preview-video");
+  const videoName = document.getElementById("video-name");
 
-</form>
-</div>
-</div>
+  if (videoInput) {
+    videoInput.addEventListener("change", () => {
+      const file = videoInput.files[0];
+      if (file && file.type.startsWith("video/")) {
+        const url = URL.createObjectURL(file);
+        videoPreview.src = url;
+        videoPreview.style.display = "block"; 
+        videoName.textContent = `Ви обрали відео: ${file.name}`;
+        videoPreviewContainer.classList.remove("hidden");
+      } else {
+        videoPreviewContainer.classList.add("hidden");
+        videoPreview.src = "";
+        videoPreview.style.display = "none";
+        videoName.textContent = "";
+      }
+    });
+  }
+});
+</script>
+
 </body>
 </html>

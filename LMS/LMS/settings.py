@@ -131,6 +131,6 @@ LOGOUT_REDIRECT_URL = 'home_view'
 
 LOGIN_URL = 'login_view'
 
-MEDIA_ROOT = os.path.join(BASE_DIR / "LMSproject", 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'

@@ -44,6 +44,6 @@ class AnswerForTask(models.Model):
     task = models.ForeignKey(Task, on_delete = models.CASCADE)
     answer = models.TextField(null=False, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    grade = models.IntegerField(default='0', validators=[
+    grade = models.IntegerField(null=False,blank=False,default='0', validators=[
         MaxValueValidator(12),MinValueValidator(0),
     ])

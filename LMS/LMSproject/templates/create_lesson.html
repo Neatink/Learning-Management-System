@@ -34,22 +34,39 @@
 
 
 <div class="form-row file-input">
-<label class="field-label">{{ form.image.label }}</label>
-<label class="file-btn" for="id_image">Обрати фотографію</label>
-{{ form.image }}
-{% if form.image.errors %}
-<div class="field-errors">{{ form.image.errors }}</div>
-{% endif %}
+  <label class="field-label">{{ form.image.label }}</label>
+  <label class="file-btn" for="id_image">Обрати фотографію</label>
+  {{ form.image }}
+  
+  <div id="image-preview" style="margin-top:12px; display:none;">
+    <p id="image-name" style="font-size:14px; color:var(--muted); margin-bottom:6px;"></p>
+    <img id="preview-img" src=  "" alt="Прев’ю" 
+         style="max-width:100%; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.4);" />
+  </div>
+
+  {% if form.image.errors %}
+  <div class="field-errors">{{ form.image.errors }}</div>
+  {% endif %}
 </div>
 
 
 <div class="form-row file-input">
-<label class="field-label">{{ form.video.label }}</label>
-<label class="file-btn" for="id_video">Обрати відео</label>
-{{ form.video }}
-{% if form.video.errors %}
-<div class="field-errors">{{ form.video.errors }}</div>
-{% endif %}
+  <label class="field-label">{{ form.video.label }}</label>
+  <label class="file-btn" for="id_video">Обрати відео</label>
+  {{ form.video }}
+
+  <div id="video-preview" style="margin-top:12px; display:none;">
+    <p id="video-name" style="font-size:14px; color:var(--muted); margin-bottom:6px;"></p>
+    <video id="preview-video" controls
+           style="max-width:100%; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.4);">
+      <source src="" type="video/mp4">
+      Ваш браузер не підтримує відео-тег.
+    </video>
+  </div>
+
+  {% if form.video.errors %}
+  <div class="field-errors">{{ form.video.errors }}</div>
+  {% endif %}
 </div>
 
 
@@ -61,5 +78,52 @@
 </form>
 </div>
 </div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const imageInput = document.getElementById("id_image");
+  const imagePreviewContainer = document.getElementById("image-preview");
+  const imagePreview = document.getElementById("preview-img");
+  const imageName = document.getElementById("image-name");
+
+  imageInput.addEventListener("change", () => {
+    const file = imageInput.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imagePreview.src = e.target.result;
+        imageName.textContent = `Ви обрали картинку: ${file.name}`;
+        imagePreviewContainer.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      imagePreviewContainer.style.display = "none";
+      imagePreview.src = "";
+      imageName.textContent = "";
+    }
+  });
+
+  const videoInput = document.getElementById("id_video");
+  const videoPreviewContainer = document.getElementById("video-preview");
+  const videoPreview = document.getElementById("preview-video");
+  const videoName = document.getElementById("video-name");
+
+  videoInput.addEventListener("change", () => {
+    const file = videoInput.files[0];
+    if (file && file.type.startsWith("video/")) {
+      const url = URL.createObjectURL(file);
+      videoPreview.src = url;
+      videoName.textContent = `Ви обрали відео: ${file.name}`;
+      videoPreviewContainer.style.display = "block";
+    } else {
+      videoPreviewContainer.style.display = "none";
+      videoPreview.src = "";
+      videoName.textContent = "";
+    }
+  });
+});
+
+</script>
 </body>
 </html>
