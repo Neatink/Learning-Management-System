@@ -27,6 +27,7 @@ background-image: radial-gradient(1200px 600px at 10% 10%, rgba(124,77,255,0.10)
 radial-gradient(900px 500px at 90% 90%, rgba(59,20,123,0.12), transparent 15%),
 linear-gradient(180deg, rgba(15,19,32,0.6), rgba(6,5,12,0.9));
 background-blend-mode: screen, screen, normal;overflow-y:auto;
+padding-top: 100px; 
 }
 
 body::before{
@@ -399,3 +400,130 @@ form {
 .media-row.flex {
   display: flex;
 }
+:root{
+  --bg: #0b0710;
+  --bg-soft: #10071b;
+  --surface: #0f1320;
+  --muted-surface: #161623;
+
+  --text: #e9e6f7;
+  --muted: #abb0c3;
+  --soft: #9aa0b8;         
+
+  --primary-400: #9b87f5;
+  --primary-500: #7c66f2;
+  --primary-600: #6a4feb;
+
+  --border: #1e1e28;
+  --radius: 12px;
+  --shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+body{
+  margin:0;
+  font-family:system-ui, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 16px;
+}
+
+.flex{display:flex;gap:8px}
+.mt-1{margin-top:1.5rem}
+
+.btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:6px 12px;
+  color:var(--text);
+  cursor:pointer;
+  text-decoration:none;
+}
+.btn-primary{
+  background:var(--primary-500);
+  border:none;
+  color:white;
+}
+.link-btn{
+  color:var(--primary-400);
+  text-decoration:none;
+  margin-left:8px;
+}
+.text-muted{color:var(--muted)}
+.bg-panel{
+  background:var(--surface);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.alert{
+  background:var(--muted-surface);
+  border-radius:var(--radius);
+  padding:12px;
+  color:var(--muted);
+}
+
+.course-top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(20,14,30,0.95), rgba(12,9,20,0.85));
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  padding: 0 12px;
+}
+.course-top-banner .banner-inner { width: 100%; padding: 0; }
+
+.banner-card {
+  flex: 0 0 auto;
+  min-width: 160px;
+  max-width: 200px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.banner-card:hover {
+  transform: scale(1.05);
+  background: #2a2a3a;
+}
+.banner-card h4 { font-size: 13px; margin: 0 0 4px; }
+.banner-card .date { font-size: 11px; color: var(--muted); }
+
+
+
+.course-top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  z-index: 1000;
+}
+
+
+.banner-scroller {
+  display: flex;
+  gap: 10px;
+  overflow-x: hidden;
+  align-items: center;
+  height: 100%;
+}
+
+.banner-scroller::-webkit-scrollbar { display: none; }

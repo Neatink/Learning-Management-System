@@ -1,63 +1,122 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="/static/styles.css" />
-<title>LMS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LMS</title>
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-<header class="container">
 {% if user.is_authenticated %}
-  <nav class="flex" style="justify-content:space-between;align-items:center">
-    <div class="flex">
-        <span class="text-muted">Привіт, {{ user.username }}</span>
-    </div>
-
-    <div class="flex">
-        <a href="/profile/{{ user.id }}" class="link-btn">Профіль</a>
-        {% if user.role == 'Admin' %}
-          <a href="/admin-menu" class="link-btn">Адмін меню</a>
-        {% endif %}
-        <form method="post" action="{% url 'logout_view' %}" style="display:inline-block;margin-left:8px">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary">Вийти</button>
-        </form>
-      {% else %}
-        <a href="/login" class="btn btn-primary">Логін</a>
-        <a href="/register" style="margin-left:8px" class="btn">Реєстрація</a>
-      {% endif %}
-    </div>
-  </nav>
-</header>
-
-<main class="container mt-1">
-  <div class="hero-bg">
-    <h1>LMS</h1>
-    <p class="text-muted">LMS — це Learning Management System</p>
-  </div>
-
-  <section class="mt-1">
-    {% if user.is_authenticated %}
-      <div class="bg-panel">
-        <h2>Список доступних курсів</h2>
-        <p class="text-muted">Оберіть курс, щоб перейти до його сторінки.</p>
-
-        <div class="course-list">
-          {% for course in courses %}
-            <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
-          {% empty %}
-            <div class="alert">У вас поки немає курсів.</div>
-          {% endfor %}
+<div class="course-top-banner">
+  <div class="banner-inner" id="bannerScroller">
+    <div class="banner-scroller">
+      {% for course in courses %}
+        <a href="/course/detail/{{ course.id }}" class="banner-card">
+          <h4>{{ course.name }}</h4>
+          <span class="date">{{ course.create_date|date:"d.m.Y H:i" }}</span>
+        </a>
+      {% empty %}
+        <div class="banner-card">
+          <h4>Поки що немає подій</h4>
         </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
 
-      </div>
+  <header class="container">
+    {% if user.is_authenticated %}
+      <nav class="flex" style="justify-content:space-between;align-items:center">
+        <div class="flex">
+          <span class="text-muted">Привіт, {{ user.username }}</span>
+        </div>
+        <div class="flex">
+          <a href="/profile/{{ user.id }}" class="link-btn">Профіль</a>
+          {% if user.role == 'Admin' %}
+            <a href="/admin-menu" class="link-btn">Адмін меню</a>
+          {% endif %}
+          <form method="post" action="{% url 'logout_view' %}" style="display:inline-block;margin-left:8px">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Вийти</button>
+          </form>
+        </div>
+      </nav>
     {% else %}
-      <div class="page-center">
-        <h1>Щоб переглянути список курсів увійдіть до акаунту!</h1>
-      </div>
+      <nav class="flex" style="justify-content:space-between;align-items:center">
+        <div class="flex">
+          <a href="/login" class="btn btn-primary">Логін</a>
+          <a href="/register" style="margin-left:8px" class="btn">Реєстрація</a>
+        </div>
+      </nav>
     {% endif %}
-  </section>
-</main>
+  </header>
+
+
+  <main class="container mt-1">
+    <div class="hero-bg">
+      <h1>LMS</h1>
+      <p class="text-muted">LMS — це Learning Management System</p>
+    </div>
+
+    <section class="mt-1">
+      {% if user.is_authenticated %}
+        <div class="bg-panel">
+          <h2>Список доступних курсів</h2>
+          <p class="text-muted">Оберіть курс, щоб перейти до його сторінки.</p>
+          <div class="course-list">
+            {% for course in courses %}
+              <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
+            {% empty %}
+              <div class="alert">У вас поки немає курсів.</div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <div class="page-center">
+          <h1>Щоб переглянути список курсів увійдіть до акаунту!</h1>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+
+  <script>
+(function(){
+  const scroller = document.querySelector('.banner-scroller');
+  if(!scroller) return;
+
+  scroller.innerHTML += scroller.innerHTML;
+
+  let speed = 0.5;
+  let paused = false;
+  let raf;
+
+  function frame(){
+    if(!paused){
+      scroller.scrollLeft += speed;
+
+      if(scroller.scrollLeft >= scroller.scrollWidth / 2){
+        scroller.scrollLeft = 0;
+      }
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  raf = requestAnimationFrame(frame);
+
+  scroller.addEventListener('mouseenter', ()=> paused = true);
+  scroller.addEventListener('mouseleave', ()=> paused = false);
+
+  scroller.addEventListener('wheel', e=>{
+    if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault(); 
+    scroller.scrollLeft += e.deltaY;
+  }, { passive:false });
+
+  window.addEventListener('beforeunload', ()=> cancelAnimationFrame(raf));
+})();
+
+  </script>
 </body>
 </html>
