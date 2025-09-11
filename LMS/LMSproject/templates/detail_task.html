@@ -11,10 +11,12 @@
 <div class="bg-panel">
 <div class="task-header" style="display: flex; justify-content: space-between; align-items: center;">
     <h1 style="margin: 0;">Назва: {{ task }}</h1>
+{% if request.user.role == 'Student' %}
 {% if user_grade.grade %}
     <span class="task-grade">Оцінка: {{ user_grade.grade }}</span>
 {% else %}
     <span class="task-grade" style="color: red;">Не оцінено</span>
+{% endif %}
 {% endif %}
 </div>
 <p class="text-muted">Опис: {{ task.description }}</p>
