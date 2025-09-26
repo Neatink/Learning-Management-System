@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from .mixins import *
+from django.core.paginator import Paginator
 
 class HomeView(ListView):
     template_name = 'home.html'
@@ -100,10 +101,17 @@ class AdminMenuView(LoginRequiredMixin, UserIsAdminMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['courses'] = Course.objects.all()
-        context['lessons'] = Lesson.objects.all()
-        context['tasks'] = Task.objects.all()
-        return context
+        
+        context['courses'] = Paginator(Course.objects.all(), 8)
+        context['lessons'] = Paginator(Lesson.objects.all(), 8)
+        context['tasks'] = Paginator(Task.objects.all(), 8)
+        
+        page_number = self.request.GET.get("page")
+        context['courses'] = context['courses'].get_page(page_number)
+        context['lessons'] = context['lessons'].get_page(page_number)
+        context['tasks'] = context['tasks'].get_page(page_number)
+
+        return {"context": context, "page_obj": context['courses']}
 
 class CreateCourseView(LoginRequiredMixin, UserIsAdminMixin, CreateView):
     template_name = 'create_course.html'

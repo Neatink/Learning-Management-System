@@ -18,7 +18,7 @@
       <a href="/course/create" class="btn btn-primary btn-block">Створити</a>
 
       <ul class="list mt-1">
-        {% for course in courses %}
+        {% for course in context.courses %}
           <li class="list-item">
             <a href="/course/detail/{{ course.id }}" class="item-link" title="{{ course }}">{{ course|truncatechars:36 }}</p>
             <div class="actions">
@@ -37,7 +37,7 @@
       <a href="/lesson/create" class="btn btn-primary btn-block">Створити</a>
 
       <ul class="list mt-1">
-        {% for lesson in lessons %}
+        {% for lesson in context.lessons %}
           <li class="list-item">
             <a href="/lesson/detail/{{ lesson.id }}" class="item-link">{{ lesson }}</p>
             <div class="actions">
@@ -56,7 +56,7 @@
       <a href="/task/create" class="btn btn-primary btn-block">Створити</a>
 
       <ul class="list mt-1">
-        {% for task in tasks %}
+        {% for task in context.tasks %}
           <li class="list-item">
             <a href="/task/detail/{{ task.id }}" class="item-link">{{ task }}</a>
             <div class="actions">
@@ -71,6 +71,25 @@
     </section>
   </div>
 </div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; перша</a>
+            <a href="?page={{ page_obj.previous_page_number }}">попередня</a>
+        {% endif %}
+
+        <span class="current">
+            Сторiнка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">наступна</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">остання &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}
 </body>
 </html>
