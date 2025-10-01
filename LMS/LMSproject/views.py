@@ -17,7 +17,7 @@ class HomeView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["last_courses"] = Course.objects.order_by('-create_date')[:12]
+        context["last_courses"] = Course.objects.only("id", "name", "create_date").order_by("-create_date")[:12]
         return context
 
 class CoursesDetailView(LoginRequiredMixin, DetailView):
