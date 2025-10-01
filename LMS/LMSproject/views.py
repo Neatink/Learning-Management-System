@@ -13,6 +13,7 @@ class HomeView(ListView):
     template_name = 'home.html'
     model = Course
     context_object_name = 'courses'
+    paginate_by = 6
     
 
 class CoursesDetailView(LoginRequiredMixin, DetailView):
@@ -179,3 +180,10 @@ class GradeTaskUser(LoginRequiredMixin, UserIsNotStudentMixin, UpdateView):
     
     def get_success_url(self):
         return reverse_lazy("task_detail_view", kwargs={"pk": self.object.task.id})
+    
+
+class ListCourseView(LoginRequiredMixin, ListView):
+    template_name = 'list_courses.html'
+    model = Course
+    context_object_name = 'courses'
+    paginate_by = 32

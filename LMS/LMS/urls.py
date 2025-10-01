@@ -26,6 +26,7 @@ urlpatterns = [
     path('user_change_data/<pk>', ChangeUserDataView.as_view(), name='user_change_data_view'),
     path('user_change_password/', ChangeUserPasswordView.as_view(), name='user_change_password_view'),
 
+    path('course/list/', ListCourseView.as_view(), name='course_list_view'),
     path('course/detail/<pk>', CoursesDetailView.as_view(), name='course_detail_view'),
     path('course/create', CreateCourseView.as_view(), name='course_create_view'),
     path('course/update/<pk>', UpdateCourseView.as_view(), name='course_update_view'),

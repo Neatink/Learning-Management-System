@@ -63,13 +63,16 @@
     <section class="mt-1">
       {% if user.is_authenticated %}
         <div class="bg-panel">
+          <div class="flex" style="justify-content:space-between;align-items:center">
           <h2>Список доступних курсів</h2>
+            <a href="/course/list">Усi</a>
+          </div>
           <p class="text-muted">Оберіть курс, щоб перейти до його сторінки.</p>
           <div class="course-list">
             {% for course in courses %}
               <a href="/course/detail/{{ course.id }}">{{ course.name }}</a>
             {% empty %}
-              <div class="alert">У вас поки немає курсів.</div>
+              <div class="alert">Немає доступних курсів.</div>
             {% endfor %}
           </div>
         </div>
@@ -80,6 +83,24 @@
       {% endif %}
     </section>
   </main>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; перша</a>
+            <a href="?page={{ page_obj.previous_page_number }}">попередня</a>
+        {% endif %}
+
+        <span class="current">
+            Сторiнка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">наступна</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">остання &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
   <script>
 (function(){
