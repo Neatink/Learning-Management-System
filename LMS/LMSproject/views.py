@@ -15,6 +15,10 @@ class HomeView(ListView):
     context_object_name = 'courses'
     paginate_by = 6
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["last_courses"] = Course.objects.order_by('-create_date')[:12]
+        return context
 
 class CoursesDetailView(LoginRequiredMixin, DetailView):
     template_name = 'detail_course.html'

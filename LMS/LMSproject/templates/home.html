@@ -11,7 +11,7 @@
 <div class="course-top-banner">
   <div class="banner-inner" id="bannerScroller">
     <div class="banner-scroller">
-      {% for course in courses %}
+      {% for course in last_courses %}
         <a href="/course/detail/{{ course.id }}" class="banner-card">
           <h4>{{ course.name }}</h4>
           <span class="date">{{ course.create_date|date:"d.m.Y H:i" }}</span>
@@ -30,7 +30,7 @@
     {% if user.is_authenticated %}
       <nav class="flex" style="justify-content:space-between;align-items:center">
         <div class="flex">
-          <span class="text-muted">Привіт, {{ user.username }}</span>
+          <span class="text-muted">Привіт, {{ user.username }}!</span>
         </div>
         <div class="flex">
           <a href="/profile/{{ user.id }}" class="link-btn">Профіль</a>
@@ -76,6 +76,23 @@
             {% endfor %}
           </div>
         </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; перша</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">попередня</a>
+                {% endif %}
+
+                <span class="current">
+                    Сторiнка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">наступна</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">остання &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
       {% else %}
         <div class="page-center">
           <h1>Щоб переглянути список курсів увійдіть до акаунту!</h1>
@@ -84,30 +101,16 @@
     </section>
   </main>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; перша</a>
-            <a href="?page={{ page_obj.previous_page_number }}">попередня</a>
-        {% endif %}
-
-        <span class="current">
-            Сторiнка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">наступна</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">остання &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
   <script>
 (function(){
   const scroller = document.querySelector('.banner-scroller');
   if(!scroller) return;
 
-  scroller.innerHTML += scroller.innerHTML;
+  const items = Array.from(scroller.children);
+
+  if (scroller.scrollWidth > scroller.clientWidth) {
+    items.forEach(item => scroller.appendChild(item.cloneNode(true)));
+  }
 
   let speed = 0.5;
   let paused = false;
@@ -118,7 +121,7 @@
       scroller.scrollLeft += speed;
 
       if(scroller.scrollLeft >= scroller.scrollWidth / 2){
-        scroller.scrollLeft = 0;
+        scroller.scrollLeft -= scroller.scrollWidth / 2;
       }
     }
     raf = requestAnimationFrame(frame);
@@ -131,13 +134,20 @@
 
   scroller.addEventListener('wheel', e=>{
     if(Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-    e.preventDefault(); 
+    e.preventDefault();
+
     scroller.scrollLeft += e.deltaY;
+
+    if(scroller.scrollLeft >= scroller.scrollWidth / 2){
+      scroller.scrollLeft -= scroller.scrollWidth / 2;
+    }
+    if(scroller.scrollLeft < 0){
+      scroller.scrollLeft += scroller.scrollWidth / 2;
+    }
   }, { passive:false });
 
   window.addEventListener('beforeunload', ()=> cancelAnimationFrame(raf));
 })();
-
   </script>
 </body>
 </html>
